@@ -19,46 +19,40 @@ Then, it computes the connected components of the graph and outputs the domains 
 
 # Data Files
 
-1 . Input
-  
-  1. logos.snappy.parquet
-    
-    A Parquet file where:
-    
-    1. The first column is assumed to contain domain names (e.g. example.com).
-    
-    2. The notebook currently uses df.iloc[:, 0] to read domains, so the first column must be domains.
+## Input
 
-2. Intermediate
-  
-  1. logos/ directory
-    Contains downloaded logo images. Filenames are the normalized domain with dots replaced by underscores and an extension:
-    Example: example_com.png or example_com.svg.
-  
-  2. data_with_logos.snappy.parquet
-    
-    A Parquet file created by the notebook with additional columns:
-    
-    1. logo_path
-    2. logo_source
+- `logos.snappy.parquet`  
+  - First column contains domain names (e.g. `example.com`).
+  - Notebook uses `df.iloc[:, 0]` so the first column must be domains.
 
-3. Output
-  
-  1. logo_clusters.json
-    JSON file containing a list of clusters
+## Intermediate
+
+- `logos/` directory  
+  - Contains downloaded logo images.
+  - Filenames are normalized domains (e.g. `example_com.png`).
+
+- `data_with_logos.snappy.parquet`  
+  - Has extra columns:
+    - `logo_path`
+    - `logo_source`
+
+## Output
+
+- `logo_clusters.json`  
+  - JSON file containing a list of clusters.
 
 
 # Limitations & Considerations
 
-1. Runtime
+## Runtime
 
-Comparing all logo pairs is O(N^2) in the number of logos. With thousands of logos, this can be slow.
+- Comparing all logo pairs is O(N^2) in the number of logos. With thousands of logos, this can be slow.
 
-2. Network dependence
+## Network dependence
 
-The logo fetching step depends on external services (logo.dev and Brandfetch).
-Rate limiting and network errors are handled simply by skipping the logo.
+- The logo fetching step depends on external services (logo.dev and Brandfetch).
+- Rate limiting and network errors are handled simply by skipping the logo.
 
-3. Threshold choice
+## Threshold choice
 
-The distance threshold (≤ 10) is a heuristic and may need tuning for different datasets.
+- The distance threshold (≤ 10) is a heuristic and may need tuning for different datasets.
